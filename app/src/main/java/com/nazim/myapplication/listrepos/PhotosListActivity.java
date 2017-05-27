@@ -15,7 +15,8 @@ public class PhotosListActivity extends AppCompatActivity {
 
     @Inject PhotosRepository githubRepository;
     private PhotosListAdapter repoListAdapter;
-    private PhotosListPresenter repoListPresenter;
+    @Inject PhotosListPresenter repoListPresenter;
+    private PhotosListComponent component;
     @Inject ImageLoader imageLoader;
 
     @BindView(R.id.recycler_view) RecyclerView recyclerView;
@@ -27,10 +28,8 @@ public class PhotosListActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
-        PhotosListComponent component = DaggerRepoListComponent.builder().build();
+        component = DaggerPhotosListComponent.builder().build();
         component.inject(this);
-
-        repoListPresenter = new PhotosListPresenter(githubRepository);
 
         initView();
 
@@ -48,6 +47,7 @@ public class PhotosListActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         repoListPresenter.unbind();
+        component = null;
         super.onDestroy();
     }
 }

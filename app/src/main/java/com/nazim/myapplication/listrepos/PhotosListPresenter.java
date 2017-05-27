@@ -4,6 +4,7 @@ import android.util.Log;
 import com.nazim.myapplication.model.Photo;
 import com.nazim.myapplication.repository.PhotosRepository;
 import java.util.List;
+import javax.inject.Inject;
 import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -15,6 +16,7 @@ public class PhotosListPresenter {
     private final CompositeSubscription compositeSubscription;
     private PhotosRepository photosRepository;
 
+    @Inject
     PhotosListPresenter(final PhotosRepository photosRepository) {
         this.photosRepository = photosRepository;
         compositeSubscription = new CompositeSubscription();
