@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.nazim.myapplication.R;
+import com.nazim.myapplication.common.ImageLoader;
 import com.nazim.myapplication.repository.PhotosRepository;
 import javax.inject.Inject;
 
@@ -15,6 +16,7 @@ public class PhotosListActivity extends AppCompatActivity {
     @Inject PhotosRepository githubRepository;
     private PhotosListAdapter repoListAdapter;
     private PhotosListPresenter repoListPresenter;
+    @Inject ImageLoader imageLoader;
 
     @BindView(R.id.recycler_view) RecyclerView recyclerView;
 
@@ -39,7 +41,7 @@ public class PhotosListActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        repoListAdapter = new PhotosListAdapter(this);
+        repoListAdapter = new PhotosListAdapter(this, imageLoader);
         recyclerView.setAdapter(repoListAdapter);
     }
 

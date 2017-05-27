@@ -8,8 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import com.bumptech.glide.Glide;
 import com.nazim.myapplication.R;
+import com.nazim.myapplication.common.ImageLoader;
 import com.nazim.myapplication.model.Photo;
 import java.util.List;
 
@@ -17,9 +17,11 @@ class PhotosListAdapter extends RecyclerView.Adapter<PhotosListAdapter.ViewHolde
 
     private List<Photo> photoList;
     private final Context context;
+    private ImageLoader imageLoader;
 
-    PhotosListAdapter(@NonNull final Context context) {
+    PhotosListAdapter(@NonNull final Context context, @NonNull final ImageLoader imageLoader) {
         this.context = context;
+        this.imageLoader = imageLoader;
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
@@ -47,8 +49,7 @@ class PhotosListAdapter extends RecyclerView.Adapter<PhotosListAdapter.ViewHolde
     public void onBindViewHolder(PhotosListAdapter.ViewHolder holder, int position) {
         final Photo photo = photoList.get(position);
         holder.photoTitle.setText(photo.getTitle());
-        Glide.with(context).load(photo.getThumbnailUrl()).
-            error(R.mipmap.ic_launcher).into(holder.photoImg);
+        imageLoader.loadImageInto(context, photo.getThumbnailUrl(), holder.photoImg, R.mipmap.ic_launcher);
     }
 
     @Override
