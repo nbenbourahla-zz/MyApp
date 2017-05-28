@@ -1,10 +1,11 @@
 package com.nazim.myapplication.common;
 
-import com.nazim.myapplication.navigation.NavigationHelper;
 import dagger.Component;
 import javax.inject.Singleton;
 
-@Singleton
-@Component(modules = AppModule.class) public interface AppComponent {
+/**
+ * Component that declare all app general dependancies
+ */
+@Singleton @Component(modules = AppModule.class) public interface AppComponent {
     ImageLoader provideImageLoader();
 }

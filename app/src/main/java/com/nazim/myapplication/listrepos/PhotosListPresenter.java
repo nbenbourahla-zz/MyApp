@@ -1,24 +1,27 @@
 package com.nazim.myapplication.listrepos;
 
 import android.util.Log;
+import com.nazim.myapplication.api.Cache;
 import com.nazim.myapplication.model.Photo;
 import com.nazim.myapplication.repository.PhotosRepository;
 import java.util.List;
 import javax.inject.Inject;
 import rx.Observable;
-import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 
-public class PhotosListPresenter {
+class PhotosListPresenter {
 
+    static final String TAG = "PhotosListPresenter";
     private final CompositeSubscription compositeSubscription;
+    private final Cache cache;
     private PhotosRepository photosRepository;
 
     @Inject
-    PhotosListPresenter(final PhotosRepository photosRepository) {
+    PhotosListPresenter(final PhotosRepository photosRepository, Cache cache) {
         this.photosRepository = photosRepository;
+        this.cache = cache;
         compositeSubscription = new CompositeSubscription();
     }
 
@@ -26,23 +29,13 @@ public class PhotosListPresenter {
         Observable<List<Photo>> repoObservable = photosRepository.getPhotos();
         compositeSubscription.add(repoObservable.subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new Subscriber<List<Photo>>() {
-                @Override
-                public void onCompleted() {
-
-                }
-
-                @Override
-                public void onError(Throwable e) {
-                    Log.e("RepoListActivity", "Error", e);
-                }
-
-                @Override
-                public void onNext(List<Photo> repos) {
-                    repoListAdapter.setData(repos);
+            .subscribe(photoList -> {
+                    //Add interceptor to save data to cache
+                    cache.putInCache(photoList);
+                    repoListAdapter.setData(photoList);
                     repoListAdapter.notifyDataSetChanged();
-                }
-            }));
+                }, e -> Log.e(TAG, "Error when getting data", e)
+            ));
     }
 
     void unbind() {

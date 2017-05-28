@@ -2,13 +2,23 @@ package com.nazim.myapplication.api;
 
 import com.google.gson.Gson;
 import com.nazim.myapplication.repository.PhotosRepository;
+import com.nazim.myapplication.storage.DataSource;
 import dagger.Component;
 import javax.inject.Singleton;
+import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 
-@Singleton
-@Component(modules = ApiModule.class) public interface ApiComponent {
+/**
+ * Component that hold all Api dependencies
+ */
+@Singleton @Component(modules = ApiModule.class) interface ApiComponent {
     Gson provideGson();
+
+    Cache provideCache();
+
+    DataSource provideDataSource();
+
+    OkHttpClient provideOkhttp();
 
     Retrofit provideRetrofit();
 
