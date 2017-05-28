@@ -41,7 +41,7 @@ class PhotosListAdapter extends RecyclerView.Adapter<PhotosListAdapter.ViewHolde
 
     @Override
     public PhotosListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.photo_list_line, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.photo_list_line, parent, false);
         return new ViewHolder(view);
     }
 
