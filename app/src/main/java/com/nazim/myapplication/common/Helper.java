@@ -7,6 +7,7 @@ import android.net.NetworkInfo;
 public class Helper {
     /**
      * Check if the network connection is available or not
+     *
      * @param context a non null context
      * @return true if the connection is available, false otherwise
      */

@@ -1,6 +1,5 @@
 package com.nazim.myapplication.repository;
 
-import com.nazim.myapplication.api.PhotosService;
 import com.nazim.myapplication.model.Photo;
 import com.nazim.myapplication.storage.DataSource;
 import java.util.List;
@@ -19,6 +18,7 @@ public class PhotosRepository {
 
     /**
      * Get all photos
+     *
      * @return An observable containing the list of the Photos
      */
     public Observable<List<Photo>> getPhotos() {
